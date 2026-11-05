@@ -1,5 +1,14 @@
 # @nanocollective/nanocoder
 
+# 1.33.0
+
+- feat: add read-only sequence tracker and /macros command to discover recurring workflows (#1585)
+
+- Remove `yaml` and `cli-table3` from the startup import graph by loading them on demand.
+- The tool approval dialog no longer accepts Enter before the call has been checked. The Yes/No choice used to be live from the moment the dialog opened, with "Yes" already highlighted, so pressing Enter while the validator ran or while "Loading preview..." showed approved the tool before you could see what it would do. The dialog now shows "Checking tool call..." or "Loading preview..." until the schema check, validator, and preview are done, and only then shows Yes/No. Escape still cancels at any time. Closes #1407 and #1814.
+
+If there are any problems, feedback or thoughts please drop an issue or message us through Discord! Thank you for using Nanocoder.
+
 # 1.32.0
 
 - Nanocoder's ACP agent now honours the `mcpServers` an editor sends on `session/new`, `session/load` and `session/resume`. Stdio and HTTP servers are connected for that session only, so their tools exist in that session (and in subagents it starts) and in no other, and your own MCP configuration is never read or changed. Loading or resuming a session replaces its previous servers, and closing it, or deleting it, disconnects them. A server that fails to connect, or uses SSE, is logged and skipped and the request still succeeds. `initialize` now reports `mcpCapabilities` (`http`). A tool whose name an existing tool already has is skipped, and these tools follow the usual approval rules. Sessions with no servers behave as before.
